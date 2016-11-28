@@ -22,6 +22,7 @@ brooklyn.catalog:
   name: SaltEntity
   description: Software managed by Salt CM
   itemType: template
+  iconUrl: https://pbs.twimg.com/profile_images/577940000693620736/-lag2uPT.png
   license: Apache-2.0
   publish:
     license_code: Apache-2.0
