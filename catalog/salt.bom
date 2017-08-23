@@ -17,5 +17,22 @@
 # under the License.
 #
 brooklyn.catalog:
+  publish: &saltPublish
+    name: &saltName "Salt"
+    description: &saltDescription |
+      Salt is an intelligent orchestration for the software-defined data center
+    version: &saltVersion "1.0.0-SNAPSHOT" # BROOKLYN_SALT_VERSION
+    iconUrl: &saltIconUrl "https://pbs.twimg.com/profile_images/577940000693620736/-lag2uPT.png"
+    license_code: &saltLicense "Apache-2.0"
   items:
-    - https://raw.githubusercontent.com/brooklyncentral/brooklyn-saltentity/master/catalog/salt.bom
+  - id: brooklyn-salt
+    name: *saltName
+    description: *saltDescription
+    version: *saltVersion
+    iconUrl: *saltIconUrl
+    publish: *saltLicense
+    itemType: entity
+    item:
+      id: brooklyn-salt
+      name: *saltName
+      type: org.apache.brooklyn.entity.cm.salt.SaltEntity
