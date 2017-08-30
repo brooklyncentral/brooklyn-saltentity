@@ -69,21 +69,20 @@ brooklyn.catalog:
             assert:
               contains: "Succeeded: 1"
 
-#        # Should be the right test for this. But, as SaltEntity does not implement SoftwareProcess and the
-#        # provisioning.properties trick does not as well, it means that httpd won't be accessible from outside unless
-#        # a manual operation is done to open this port. In a meantine, we are going to use the effector test to curl
-#        # locally
-#        - type: test-http-status-200
-#          name: "3. HTTP Test"
-#          url: >
-#            $brooklyn:formatString("http://%s:%s",
-#            $brooklyn:component("salt").attributeWhenReady("host.address"),
-#            $brooklyn:component("salt").config("httpd.port"))
-        - type: test-ssh
-          name: "3. HTTP Test"
-          brooklyn.config:
-            command: curl localhost
-            assertStatus:
-              equals: 0
-            assertOut:
-              contains: "Testing 123.."
+        - type: test-case
+          name: "3. HTTP Tests"
+          brooklyn.children:
+          - type: test-ssh
+            name: "3.1 Internal HTTP Test"
+            brooklyn.config:
+              command: curl localhost
+              assertStatus:
+                equals: 0
+              assertOut:
+                contains: "Testing 123.."
+          - type: test-http-status-200
+            name: "3.2 External HTTP Test"
+            url: >
+              $brooklyn:formatString("http://%s:%s",
+              $brooklyn:component("salt").attributeWhenReady("host.address"),
+              $brooklyn:component("salt").config("httpd.port"))
